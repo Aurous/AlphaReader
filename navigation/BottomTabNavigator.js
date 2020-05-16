@@ -3,7 +3,8 @@ import * as React from 'react';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import ListScreen from '../screens/ListScreen';
+import SettingsScreen from '../screens/ListScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -20,16 +21,24 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Home"
         component={HomeScreen}
         options={{
-          title: 'Get Started',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
+          title: 'Home',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-star-outline" />,
         }}
       />
       <BottomTab.Screen
         name="Links"
-        component={LinksScreen}
+        component={ListScreen}
         options={{
-          title: 'Resources',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+          title: 'List',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-list" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          title: 'Settings',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-settings" />,
         }}
       />
     </BottomTab.Navigator>
@@ -37,12 +46,5 @@ export default function BottomTabNavigator({ navigation, route }) {
 }
 
 function getHeaderTitle(route) {
-  const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
-
-  switch (routeName) {
-    case 'Home':
-      return 'How to get started';
-    case 'Links':
-      return 'Links to learn more';
-  }
+  return route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
 }
