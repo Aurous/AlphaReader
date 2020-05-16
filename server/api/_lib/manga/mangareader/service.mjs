@@ -15,8 +15,9 @@ class MangaReader extends SourceService {
         .then(body => {
           var pages = 0;
           var itemsPerPage = 30;
-          var results = [];
+          var results = {};
           let _ = cheerio.load(body);
+          var i = 0;
           _('#mangaresults .mangaresultitem .mangaresultinner').each(function(result) {
             let search = {};
             _(this).find('a').each(function() {
@@ -36,7 +37,8 @@ class MangaReader extends SourceService {
               search.genre = _(this).text();
             });
 
-            results.push(search);
+            results[i] = search;
+            i++;
           });
 
           _('#sp').each(function(result) {
@@ -48,10 +50,14 @@ class MangaReader extends SourceService {
 
           return {
             "searchTerm" : searchTerm,
-            "count" : results.length,
-            "pageCount" : pages,
-            "data ": results
-          }; // create true pagination. 
+            "data": results,
+            "pagination":{
+              "page": "",
+              "pageSize": itemsPerPage
+              "count": results.length,
+              "pageCount": pages
+            }
+          }; // create true pagination.
 
         });
     }else{
