@@ -1,27 +1,32 @@
-import MangaFactory from '../_lib/manga/MangaFactory.mjs';
+import SourceFactory from '../_lib/manga/SourceFactory.mjs';
 
 class Requests {
-  constructor(){
-    // placeholder
+  constructor(source){
+    this.source = source
   }
 
   async search(uri){
-    const mangaService = MangaFactory(uri, "mangareader");
-    const results = await mangaService.search(uri);
-    console.log("exit 2", results);
+    const SourceService = SourceFactory(this.source);
+    const results = await SourceService.search(uri);
     return results;
   }
 
-  manga(){
-
+  async manga(uri){
+    const SourceService = SourceFactory(this.source);
+    const results = await SourceService.manga(uri);
+    return results;
   }
 
-  chapters(){
-
+  async chapters(uri){
+    const SourceService = SourceFactory(this.source);
+    const results = await SourceService.chapters(uri);
+    return results;
   }
 
-  page(){
-
+  async page(uri){
+    const SourceService = SourceFactory(this.source);
+    const results = await SourceService.page(uri);
+    return results;
   }
 }
 

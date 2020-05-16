@@ -7,30 +7,29 @@ app.get('/', function (req, res) {
    res.send('Bleh');
 })
 
-app.get('/search/:uri', async(req, res) => {
-  console.log(req.params);
-    const { uri } = req.params;
-    if(uri){
-      const manga = new Requests();
-      const results = await manga.search(uri);
-      console.log("exit 3", results);
-      res.json(results);
-    }else{
-      res.sendStatus(500)
-    }
+app.get('/search/:source/:uri', async(req, res) => {
+  try{
+    const { uri, source } = req.params;
+    const manga = new Requests(source);
+    const results = await manga.search(uri, req.params);
+    res.json(results);
+  }catch(err){
+    console.log("Error", err);
+    res.sendStatus(400)
+  }
 })
 
-app.get('/manga/:uri', async (req, res) => {
-  res.send(req.params);
+app.get('/manga/:source/:uri', async (req, res) => {
+  res.send(req);
 })
 
-app.get('/chapters/:uri', async (req, res) => {
-  res.send(req.params);
+app.get('/chapters/:source/:uri', async (req, res) => {
+  res.send(req);
 })
 
 
-app.get('/page/:uri', async (req, res) => {
-  res.send(req.params);
+app.get('/page/:source/:uri', async (req, res) => {
+  res.send(req);
 })
 
 let server = app.listen(8081, function () {
