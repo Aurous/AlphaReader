@@ -8,8 +8,8 @@ class SourceService {
     this.sourceSlug = sourceSlug;
 
     if((this.search === undefined) ||
-      (this.manga === undefined) ||
       (this.chapters === undefined) ||
+      (this.pages === undefined) ||
       (this.page === undefined)){
         throw new TypeError('Service must impement all methods');
     }

@@ -11,21 +11,21 @@ class Requests {
     return results;
   }
 
-  async manga(uri){
-    const SourceService = SourceFactory(this.source);
-    const results = await SourceService.manga(uri);
-    return results;
-  }
-
   async chapters(uri){
     const SourceService = SourceFactory(this.source);
     const results = await SourceService.chapters(uri);
     return results;
   }
 
-  async page(uri){
+  async pages(uri, chapter){
     const SourceService = SourceFactory(this.source);
-    const results = await SourceService.page(uri);
+    const results = await SourceService.pages(uri, chapter);
+    return results;
+  }
+
+  async page(uri, chapter, page){
+    const SourceService = SourceFactory(this.source);
+    const results = await SourceService.page(uri, chapter, page);
     return results;
   }
 }

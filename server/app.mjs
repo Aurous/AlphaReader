@@ -1,11 +1,6 @@
-import _ from 'lodash';
 import express from 'express';
 import Requests from './api/Requests/index.mjs';
 const app = express();
-
-app.get('/', function (req, res) {
-   res.send('Bleh');
-})
 
 app.get('/search/:source', async(req, res) => {
   try{
@@ -15,21 +10,46 @@ app.get('/search/:source', async(req, res) => {
     res.json(results);
   }catch(err){
     console.log("Error", err);
-    res.sendStatus(400)
+    res.status(400).send(String(err));
   }
 })
 
-app.get('/manga/:source/:uri', async (req, res) => {
-  res.send(req);
-})
-
 app.get('/chapters/:source/:uri', async (req, res) => {
-  res.send(req);
+  try{
+    const { source, uri } = req.params;
+    const manga = new Requests(source);
+    const results = await manga.chapters(uri);
+    res.json(results);
+  }catch(err){
+    console.log("Error", err);
+    res.status(400).send(String(err));
+  }
+})
+
+app.get('/pages/:source/:uri/:chapter', async (req, res) => {
+  try{
+    console.log(req.params);
+    const { source, uri, chapter } = req.params;
+    const manga = new Requests(source);
+    const results = await manga.pages(uri, chapter);
+    res.json(results);
+  }catch(err){
+    console.log("Error", err);
+    res.status(400).send(String(err));
+  }
 })
 
 
-app.get('/page/:source/:uri', async (req, res) => {
-  res.send(req);
+app.get('/page/:source/:uri/:chapter/:page', async (req, res) => {
+  try{
+    const { source, uri, chapter, page } = req.params;
+    const manga = new Requests(source);
+    const results = await manga.page(uri, chapter, page);
+    res.json(results);
+  }catch(err){
+    console.log("Error", err);
+    res.status(400).send(String(err));
+  }
 })
 
 let server = app.listen(8081, function () {

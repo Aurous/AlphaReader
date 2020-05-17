@@ -17,82 +17,120 @@ class MangaReader extends SourceService {
     };
   }
 
-  generateGenre(){
-    let genre = new Array(36).fill(0);
+  successful(res){
+    if(res.ok) return res;
+    throw new TypeError('Call Unsuccessful');
+  }
 
+  generateGenre(array){
+    let genre = new Array(36).fill(0);
+    array.forEach((item) => { genre[this.genreMap[item]] = 1; });
+    return genre.join('');
   }
 
   async search(query){
     const searchTerm = query.search || "";
     const itemsPerPage = 30;
-    const page = query.page - 1 || 0; // page number
-    const readDirection = this.readDirectionMap[query.dir] || 0; //
-    const genre = this.genreMap[query.genre] || "";
+    const page = query.page - 1 || 0;
+    const readDirection = this.readDirectionMap[query.dir] || 0;
+    const genre = (typeof(query.genre) === 'object') ? this.generateGenre(query.genre) : query.genre || "";
     const sort = this.sortingMap[query.sort] || 0;
-    const genre =
-    // rd=0&status=0&order=0&genre=&p=15&i=1
-    var url = this.url + 'search/?'
-      + 'w=' + searchTerm
-      + '&p='  + (page * itemsPerPage)
-      + '&rd=' + readDirection
-      + '&genre=' + genre
-      + '&order=' + sort;
+    var url = this.url + 'search/?'+'w='+searchTerm+'&p='+(page*itemsPerPage)+'&rd='+readDirection+'&genre='+genre+'&order='+sort;
     return fetch(url)
       .then(res => res.text())
       .then(body => {
-        var pageCount = 0;
-        const results = [];
         let _ = cheerio.load(body);
-        _('#mangaresults .mangaresultitem .mangaresultinner').each(function(result) {
-          let search = {};
-          search.name  = _(this).find('a').text();
-          search.url = '/manga/mangareader' + _(this).find('a').attr('href');
-          search.thumb = _(this).find('.imgsearchresults').css('background-image').replace('url(\'','').replace('\')','');
-          search.chapters = _(this).find('.chapter_count').text();
-          search.genre = _(this).find('.manga_genre').text();
-          results.push(search);
-        });
-        const test = _('#sp').children().last().attr('href');
-
-        _('#sp').each(function(result) {
-          _(this).find('a').each(function() {
-            var pageUrl = _(this).attr('href');
-
-            if (results.length < itemsPerPage) {
-              pageCount = (results.length == 0 ? 0 : 1);
-            } else {
-              pageCount = (pageCount / itemsPerPage) + 1;
-            }
+        let pageCount;
+        const data = [];
+        const manga = _('#mangaresults .mangaresultitem .mangaresultinner');
+        if(manga.length > 0){
+          manga.each(function(result){
+            let search = {};
+            search.name  = _(this).find('a').text();
+            search.url = '/chapters/mangareader' + _(this).find('a').attr('href');
+            search.thumb = _(this).find('.imgsearchresults').css('background-image').replace('url(\'','').replace('\')','');
+            search.chapters = _(this).find('.chapter_count').text();
+            search.genre = _(this).find('.manga_genre').text();
+            data.push(search);
           });
-        });
-
-        // use different return method with undefined so that some elements are dynamic
-
-        return {
-          "url": url,
-          "data": results,
-          "pagination":{
-            "currentPage": page + 1,
-            "pageCount": pageCount,
-            "count": results.length,
-            "pageSize": itemsPerPage,
-          }
-        }; // create true pagination.
+          const params = (!!_('#sp').children().last().attr('href')) ? new URLSearchParams(_('#sp').children().last().attr('href').split('?')[1]) : 0;
+          pageCount = (params === 0 || data.length === 0) ? 0 : parseInt(params.get('p')) / itemsPerPage;
+        }
+        let results = {};
+        results.url = url || undefined;
+        results.data = data || {};
+        results.pagination = {};
+        results.pagination.page = (page + 1) || undefined;
+        results.pagination.pageCount = (pageCount + 1) || undefined;
+        results.pagination.pageSize = data.length || undefined;
+        return results;
       });
   }
 
-  async manga(){
-
+  async chapters(uri){
+    const url = this.url + uri;
+    return fetch(url)
+      .then(res => res.text())
+      .then(body => {
+        let _ = cheerio.load(body);
+        let chapters = [];
+        _('#listing tr').each(function(result){
+          if(_(this).attr('class') != 'table_head'){
+						let chapter = {};
+            chapter.title = _(this).find('td').first().text().replace(/(?:\r\n|\r|\n)/g, '');
+            chapter.date = _(this).find('td').last().text();
+            chapter.url = "/pages/mangareader" + _(this).find('td').first().find("a").attr('href');
+            chapters.push(chapter);
+          }
+        });
+        let results = {};
+				results.url = url || undefined;
+				results.chapterCount = chapters.length || undefined;
+				results.chapters = chapters || undefined;
+        return results;
+      });
   }
 
-  async chapters(){
-
+  async pages(uri, chapter){
+    const url = this.url + uri + "/" + chapter;
+    return fetch(url)
+      .then(res => res.text())
+      .then(body => {
+        let _ = cheerio.load(body);
+        let pages = [];
+        _('#pageMenu option').each(function(result) {
+          let page = {};
+          console.log(parseInt(_(this).text()));
+          page.url = "/page/mangareader" + ((parseInt(_(this).text()) === 1) ? _(this).attr('value') + "/1" : _(this).attr('value'));
+          page.number = _(this).text();
+          pages.push(page);
+        });
+      let results = {};
+      results.url = url || undefined;
+      results.pageCount = pages.length;
+      results.pages = pages;
+      return results;
+    });
   }
 
-  async page(){
-
+  async page(uri, chapter, page){
+    const url = this.url + uri + "/" + chapter + ((parseInt(page) === 1) ? "" : ("/" + page));
+    console.log(url);
+    return fetch(url)
+      .then(this.successful)
+      .then(res => res.text())
+      .then(body => {
+        let _ = cheerio.load(body);
+        let image = {};
+        image.width = _('#imgholder').find('img').first().attr('width');
+        image.height = _('#imgholder').find('img').first().attr('height');
+        image.url = _('#imgholder').find('img').first().attr('src');
+        let results = {};
+        results.url = url || undefined;
+        results.image = image;
+        return results;
+      });
   }
-
 }
 
 export default MangaReader;
