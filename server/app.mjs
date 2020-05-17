@@ -7,11 +7,11 @@ app.get('/', function (req, res) {
    res.send('Bleh');
 })
 
-app.get('/search/:source/:uri', async(req, res) => {
+app.get('/search/:source', async(req, res) => {
   try{
-    const { uri, source } = req.params;
+    const { source } = req.params;
     const manga = new Requests(source);
-    const results = await manga.search(uri, req.query);
+    const results = await manga.search(req.query);
     res.json(results);
   }catch(err){
     console.log("Error", err);

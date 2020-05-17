@@ -5,9 +5,9 @@ class Requests {
     this.source = source
   }
 
-  async search(uri, query){
+  async search(query){
     const SourceService = SourceFactory(this.source);
-    const results = await SourceService.search(uri, query);
+    const results = await SourceService.search(query);
     return results;
   }
 
