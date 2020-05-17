@@ -11,7 +11,7 @@ app.get('/search/:source/:uri', async(req, res) => {
   try{
     const { uri, source } = req.params;
     const manga = new Requests(source);
-    const results = await manga.search(uri, req.params);
+    const results = await manga.search(uri, req.query);
     res.json(results);
   }catch(err){
     console.log("Error", err);

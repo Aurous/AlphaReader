@@ -7,15 +7,16 @@ class MangaReader extends SourceService {
     super('mangareader');
   }
 
-  async search(searchTerm){
+  async search(searchTerm, query){
     if (searchTerm) {
       var url = 'http://www.mangareader.net/search/?w=' + searchTerm;
       return fetch(url)
         .then(res => res.text())
         .then(body => {
+          // const page  -> shot stuff goota fix this for good querying
           var pages = 0;
           var itemsPerPage = 30;
-          var results = {};
+          var results = [];
           let _ = cheerio.load(body);
           var i = 0;
           _('#mangaresults .mangaresultitem .mangaresultinner').each(function(result) {
@@ -37,7 +38,7 @@ class MangaReader extends SourceService {
               search.genre = _(this).text();
             });
 
-            results[i] = search;
+            results.push(search);
             i++;
           });
 
@@ -49,11 +50,10 @@ class MangaReader extends SourceService {
           });
 
           return {
-            "searchTerm" : searchTerm,
             "data": results,
             "pagination":{
-              "page": "",
-              "pageSize": itemsPerPage
+              "page": page,
+              "pageSize": itemsPerPage,
               "count": results.length,
               "pageCount": pages
             }
