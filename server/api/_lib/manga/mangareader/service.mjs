@@ -77,9 +77,9 @@ class MangaReader extends SourceService {
         _('#listing tr').each(function(result){
           if(_(this).attr('class') != 'table_head'){
 						let chapter = {};
+            chapter.url = "/pages/mangareader" + _(this).find('td').first().find("a").attr('href');
             chapter.title = _(this).find('td').first().text().replace(/(?:\r\n|\r|\n)/g, '');
             chapter.date = _(this).find('td').last().text();
-            chapter.url = "/pages/mangareader" + _(this).find('td').first().find("a").attr('href');
             chapters.push(chapter);
           }
         });
@@ -100,7 +100,6 @@ class MangaReader extends SourceService {
         let pages = [];
         _('#pageMenu option').each(function(result) {
           let page = {};
-          console.log(parseInt(_(this).text()));
           page.url = "/page/mangareader" + ((parseInt(_(this).text()) === 1) ? _(this).attr('value') + "/1" : _(this).attr('value'));
           page.number = _(this).text();
           pages.push(page);
@@ -115,7 +114,6 @@ class MangaReader extends SourceService {
 
   async page(uri, chapter, page){
     const url = this.url + uri + "/" + chapter + ((parseInt(page) === 1) ? "" : ("/" + page));
-    console.log(url);
     return fetch(url)
       .then(this.successful)
       .then(res => res.text())
