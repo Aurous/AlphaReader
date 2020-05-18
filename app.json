@@ -23,7 +23,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ryanhill.alphareader"
+
+    },
+    "android": {
+      "package": "com.ryanhill.alphareader",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
