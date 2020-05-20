@@ -7,7 +7,8 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest --watchAll",
-    "server": "nodemon --experimental-modules server/app.mjs"
+    "server": "nodemon --experimental-modules server/app.mjs",
+    "prod": "node server/app.mjs"
   },
   "jest": {
     "preset": "jest-expo"
