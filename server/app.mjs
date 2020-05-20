@@ -54,8 +54,8 @@ app.get('/page/:source/:uri/:chapter/:page', async (req, res) => {
   }
 })
 
-let server = app.listen(8081, function () {
+let server = app.listen(5001, function () {
    let host = server.address().address
    let port = server.address().port
-   console.log("Example app listening at http://%s:%s", host, port)
+   console.log("AlphaReader Api listening at http://%s:%s", host, port)
 })
