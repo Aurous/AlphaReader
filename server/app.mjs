@@ -1,6 +1,9 @@
 import express from 'express';
 import Requests from './api/Requests/index.mjs';
+import helmet from 'helmet';
+
 const app = express();
+app.use(helmet());
 
 app.get('/search/:source', async(req, res) => {
   try{
@@ -28,7 +31,6 @@ app.get('/chapters/:source/:uri', async (req, res) => {
 
 app.get('/pages/:source/:uri/:chapter', async (req, res) => {
   try{
-    console.log(req.params);
     const { source, uri, chapter } = req.params;
     const manga = new Requests(source);
     const results = await manga.pages(uri, chapter);
