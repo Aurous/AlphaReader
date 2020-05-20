@@ -29,7 +29,7 @@ class ListManga extends Component {
   }
 
   search = async () => {
-    await mangaAPI.search("mangareader").then(
+    await mangaAPI.search("mangareader", "page=2").then(
       ({ data }) => this.setState({ loading: false, data })
     );
     console.log(this.state.data);
