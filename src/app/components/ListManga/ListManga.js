@@ -63,7 +63,7 @@ class ListManga extends Component {
               </TouchableOpacity>
             )}
             numColumns={3}
-            keyExtractor={item => item.name}
+            keyExtractor={manga => manga.name}
             onEndReached={this.onEndReached.bind(this)}
             onEndReachedThreshold={1}
             onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}

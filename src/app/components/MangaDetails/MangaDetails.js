@@ -52,6 +52,7 @@ class MangaDetails extends Component {
               <Text>{item.title}</Text>
             </TouchableOpacity>
           )}
+          keyExtractor={chapter => chapter.title}
           ListHeaderComponent={this.header}
           />
       </View>
@@ -70,7 +71,11 @@ const styles = StyleSheet.create({
     height: objectHeight,
     resizeMode: 'contain',
   },
-
+  object: {
+    alignItems: 'center',
+    paddingTop: '1%',
+    paddingBottom: '1%',
+  }
 });
 
 export default MangaDetails
