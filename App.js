@@ -5,6 +5,7 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 
 import useCachedResources from './src/hooks/useCachedResources';
 import BottomTabNavigator from './src/app/navigation/BottomTabNavigator';
+import Manga from './src/app/views/Manga';
 import LinkingConfiguration from './src/app/navigation/LinkingConfiguration';
 
 const Stack = createStackNavigator();
@@ -21,6 +22,7 @@ export default function App(props) {
         <NavigationContainer linking={LinkingConfiguration}>
           <Stack.Navigator>
             <Stack.Screen name="Root" component={BottomTabNavigator} />
+            <Stack.Screen name="Manga" component={Manga} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>

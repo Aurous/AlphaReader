@@ -11,5 +11,8 @@ export default {
         Settings: 'settings',
       },
     },
+    Manga:{
+      path: 'Manga'
+    }
   },
 };

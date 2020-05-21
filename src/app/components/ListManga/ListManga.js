@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, Button, Image, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, Button, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Loading from '../../components/Loading';
 import * as mangaAPI from '../../../service/manga/api';
 
 class ListManga extends Component {
   constructor (props) {
     super(props)
+    this.navigation = this.props.navigation;
     this.state = {
       data:{
         data:[]
@@ -46,30 +47,25 @@ class ListManga extends Component {
 
     const Manga = this.state.data.data.map((manga)=>{
       return (
-        <View key={manga.name} style={styles.object} resizeMode="contain">
+        <TouchableOpacity style={styles.object} resizeMode="contain" onPress={() => { this.navigation.navigate("Manga") }}>
           <Image style={styles.image} source={{uri: manga.thumb}} />
           <Text>{manga.name}</Text>
-        </View>
+        </TouchableOpacity>
       )
     });
 
     return !this.state.loading ? (
-      <View>
-      <Button
-        onPress={this.search}
-        title="Refresh"
-        color="#841584"
-        accessibilityLabel="Learn more about this purple button" />
-      <Button
-        onPress={this.nextPage}
-        title="Next Page"
-        color="#841584"
-        accessibilityLabel="Learn more about this purple button" />
-        <Button
-          onPress={this.prevPage}
-          title="Previous Page"
-          color="#841584"
-          accessibilityLabel="Learn more about this purple button" />
+      <View >
+        <View >
+          <Button
+            onPress={this.nextPage}
+            title="Next Page"
+            color="#841584" />
+          <Button
+            onPress={this.prevPage}
+            title="Previous Page"
+            color="#841584" />
+        </View>
         <View style={styles.list} >
           { Manga }
         </View>
@@ -93,16 +89,17 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
   },
   object: {
+    paddingTop: '1%',
+    paddingBottom: '1%',
     width: objectWidth,
     alignItems: 'center',
-    // borderWidth: 1,
-    // borderColor: 'blue',
   },
   image: {
     width: objectWidth,
     height: objectHeight,
     resizeMode: 'contain',
   },
+
 });
 
 export default ListManga;
