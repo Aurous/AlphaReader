@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 class Loading extends Component {
   render() {
     return (
-      <View style={[styles.container, styles.horizontal]}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
+      <ScrollView>
+        <View style={[styles.container, styles.horizontal]}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      </ScrollView>
     )
   }
 }

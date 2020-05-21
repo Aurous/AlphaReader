@@ -65,7 +65,7 @@ class ListManga extends Component {
             numColumns={3}
             keyExtractor={item => item.name}
             onEndReached={this.onEndReached.bind(this)}
-            onEndReachedThreshold={0.5}
+            onEndReachedThreshold={1}
             onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
             />
         </View>
@@ -76,11 +76,10 @@ class ListManga extends Component {
   }
 }
 
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
-const listWidth = width;
-const objectWidth = Math.round(listWidth / 3);
-const objectHeight = Math.round(Math.round(width / 80) * (125 / 4));
+// const width = Dimensions.get('window').width;
+// const height = Dimensions.get('window').height;
+const objectWidth = Math.round(Dimensions.get('window').width / 3);
+const objectHeight = Math.round(Math.round(Dimensions.get('window').width / 80) * (125 / 4));
 
 const styles = StyleSheet.create({
   object: {

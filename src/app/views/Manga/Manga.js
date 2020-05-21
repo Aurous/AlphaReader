@@ -7,7 +7,7 @@ import MangaDetails from '../../components/MangaDetails';
 export default function Manga({navigation, route}) {
   return (
     <View style={styles.container}>
-        <MangaDetails manga={route.params.manga} navigation={navigation} />
+      <MangaDetails manga={route.params.manga} navigation={navigation} />
     </View>
   );
 }

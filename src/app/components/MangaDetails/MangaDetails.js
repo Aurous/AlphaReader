@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Button, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, Button, Image, StyleSheet, Dimensions, TouchableOpacity, FlatList } from 'react-native';
 import Loading from '../../components/Loading';
 import * as mangaAPI from '../../../service/manga/api';
 
@@ -27,25 +27,42 @@ class MangaDetails extends Component {
     await this.execute();
   }
 
+  header = () => {
+    return (
+      <View>
+        <Image style={styles.image} source={{uri: this.manga.thumb}} />
+        <Text>{this.manga.name}</Text>
+        <Text>{this.manga.chapters}</Text>
+        <Text>{this.manga.genre}</Text>
+      </View>
+    )
+  }
+
   render() {
-    const Chapters = this.state.data.chapters.map((chapter)=>{
-      // add style
-      return (
-        <TouchableOpacity key={chapter.title} style="" onPress={() => { this.navigation.navigate("Reader", {chapter: chapter}) }}>
-          <Text>{chapter.title}</Text>
-        </TouchableOpacity>
-      )
-    });
+    // const Chapters = this.state.data.chapters.map((chapter)=>{
+    //   // add style
+    //   return (
+    //     <TouchableOpacity key={chapter.title} style="" onPress={() => { this.navigation.navigate("Reader", {chapter: chapter}) }}>
+    //       <Text>{chapter.title}</Text>
+    //     </TouchableOpacity>
+    //   )
+    // });
 
     return !this.state.loading ? (
       <View>
-        <View>
-          <Image style={styles.image} source={{uri: this.manga.thumb}} />
-          <Text>{this.manga.name}</Text>
-          <Text>{this.manga.chapters}</Text>
-          <Text>{this.manga.genre}</Text>
-        </View>
-        { Chapters }
+        <FlatList
+          data={this.state.data.chapters}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              key={item.title}
+              style={styles.object}
+              resizeMode="contain"
+              onPress={() => { this.navigation.navigate("Reader", {chapter: item}) }}>
+              <Text>{item.title}</Text>
+            </TouchableOpacity>
+          )}
+          ListHeaderComponent={this.header}
+          />
       </View>
     ) : (
       <Loading />
@@ -53,11 +70,10 @@ class MangaDetails extends Component {
   }
 }
 
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
-const listWidth = width;
-const objectWidth = Math.round(listWidth / 3);
-const objectHeight = Math.round(Math.round(width / 80) * (125 / 4));
+// const width = Dimensions.get('window').width;
+// const height = Dimensions.get('window').height;
+const objectWidth = Math.round(Dimensions.get('window').width / 3);
+const objectHeight = Math.round(Math.round(Dimensions.get('window').width / 80) * (125 / 4));
 
 const styles = StyleSheet.create({
   image: {
