@@ -12,7 +12,10 @@ export default {
       },
     },
     Manga:{
-      path: 'Manga'
+      path: 'Manga',
+    },
+    Reader:{
+      path: 'Reader',
     }
   },
 };

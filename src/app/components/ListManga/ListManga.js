@@ -47,7 +47,7 @@ class ListManga extends Component {
 
     const Manga = this.state.data.data.map((manga)=>{
       return (
-        <TouchableOpacity style={styles.object} resizeMode="contain" onPress={() => { this.navigation.navigate("Manga", {manga: manga.url}) }}>
+        <TouchableOpacity style={styles.object} resizeMode="contain" onPress={() => { this.navigation.navigate("Manga", {manga: manga}) }}>
           <Image style={styles.image} source={{uri: manga.thumb}} />
           <Text>{manga.name}</Text>
         </TouchableOpacity>
