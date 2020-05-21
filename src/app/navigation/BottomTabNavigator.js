@@ -5,9 +5,6 @@ import TabBarIcon from '../components/TabBarIcon';
 import Home from '../views/Home';
 import List from '../views/List';
 import Settings from '../views/Settings';
-// import HomeScreen from '../screens/HomeScreen';
-// import ListScreen from '../screens/ListScreen';
-// import SettingsScreen from '../screens/ListScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';

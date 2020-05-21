@@ -72,7 +72,7 @@ class ListManga extends Component {
       </View>
     ) : (
       <Loading />
-    )
+    );
   }
 }
 

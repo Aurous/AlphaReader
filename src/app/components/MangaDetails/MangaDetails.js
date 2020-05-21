@@ -39,15 +39,6 @@ class MangaDetails extends Component {
   }
 
   render() {
-    // const Chapters = this.state.data.chapters.map((chapter)=>{
-    //   // add style
-    //   return (
-    //     <TouchableOpacity key={chapter.title} style="" onPress={() => { this.navigation.navigate("Reader", {chapter: chapter}) }}>
-    //       <Text>{chapter.title}</Text>
-    //     </TouchableOpacity>
-    //   )
-    // });
-
     return !this.state.loading ? (
       <View>
         <FlatList
@@ -70,8 +61,6 @@ class MangaDetails extends Component {
   }
 }
 
-// const width = Dimensions.get('window').width;
-// const height = Dimensions.get('window').height;
 const objectWidth = Math.round(Dimensions.get('window').width / 3);
 const objectHeight = Math.round(Math.round(Dimensions.get('window').width / 80) * (125 / 4));
 
