@@ -7,7 +7,7 @@ export default function Reader({navigation, route}) {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <Text>{route.params.manga}</Text>
+        <Text>{route.params.chapter.title}</Text>
       </ScrollView>
     </View>
   );

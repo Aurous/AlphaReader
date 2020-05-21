@@ -7,16 +7,14 @@ import ListManga from '../../components/ListManga';
 export default function List({ navigation }) {
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <ListManga navigation={navigation} />
-      </ScrollView>
     </View>
   );
 }
-
+//  <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+//  </ScrollView>
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fafafa',
   },
   contentContainer: {

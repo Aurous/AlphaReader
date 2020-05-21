@@ -7,16 +7,14 @@ import MangaDetails from '../../components/MangaDetails';
 export default function Manga({navigation, route}) {
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <MangaDetails manga={route.params.manga} />
-      </ScrollView>
+        <MangaDetails manga={route.params.manga} navigation={navigation} />
     </View>
   );
 }
-
+//      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+//      </ScrollView>
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fafafa',
   },
   contentContainer: {
