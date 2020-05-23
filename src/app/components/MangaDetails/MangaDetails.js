@@ -75,6 +75,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: '1%',
     paddingBottom: '1%',
+    borderWidth: 1,
+    borderColor: 'black',
   }
 });
 
