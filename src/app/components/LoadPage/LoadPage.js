@@ -1,17 +1,16 @@
 import React, { Component } from 'react'
-import { View, Text, Button, FlatList, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, Button, Image, StyleSheet, Dimensions, TouchableOpacity, FlatList } from 'react-native';
 import Loading from '../../components/Loading';
-import LoadPage from '../../components/Loading';
 import * as mangaAPI from '../../../service/manga/api';
 
-class LoadChapter extends Component {
+class LoadPage extends Component {
   constructor(props){
     super(props);
-    this.chapter = this.props.chapter;
+    console.log("efff")
+    // console.log(this.props);
+    this.page = this.props.page;
     this.state = {
       data:{
-        pageCount:0,
-        pages:[],
       },
       loading: false,
     }
@@ -19,28 +18,20 @@ class LoadChapter extends Component {
 
   componentDidMount = async () => {
     const data = await this.execute();
+    // console.log(data);
     await this.setState({ loading: false, data });
   }
 
   execute = async () => {
-    return await mangaAPI.execute(this.chapter.url).then( ({ data }) => data );
+    return await mangaAPI.execute(this.page.url).then( ({ data }) => data );
   }
 
   render() {
+    console.log("something");
     return !this.state.loading ? (
-      <View>
-        <FlatList
-          data={this.state.data.pages}
-          renderItem={({ item }) => (
-              <LoadPage page={item} />
-          )}
-          keyExtractor={item => item.number}
-          ListHeaderComponent={this.header}
-          />
-        <Text>Test</Text>
-      </View>
-    ) : (
       <Text>Test</Text>
+    ) : (
+      <Text>Text</Text>
     )
   }
 }
@@ -56,4 +47,4 @@ class LoadChapter extends Component {
 //   },
 // });
 
-export default LoadChapter
+export default LoadPage

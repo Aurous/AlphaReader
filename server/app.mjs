@@ -1,6 +1,13 @@
 import express from 'express';
 import Requests from './api/Requests/index.mjs';
+import https from 'https';
 import helmet from 'helmet';
+
+const credentials = {
+	key: fs.readFileSync('/etc/letsencrypt/live/alpha.ryanhill.com/privkey.pem', 'utf8');,
+	cert: fs.readFileSync('/etc/letsencrypt/live/alpha.ryanhill.com/cert.pem', 'utf8');,
+	ca: fs.readFileSync('/etc/letsencrypt/live/alpha.ryanhill.com/chain.pem', 'utf8');
+};
 
 const app = express();
 app.use(helmet());
@@ -54,8 +61,9 @@ app.get('/page/:source/:uri/:chapter/:page', async (req, res) => {
   }
 })
 
-let server = app.listen(5001, function () {
-   let host = server.address().address
-   let port = server.address().port
-   console.log("AlphaReader Api listening at http://%s:%s", host, port)
-})
+const httpsServer = https.createServer(credentials, app);
+httpsServer.listen(5001, () => {
+  let host = server.address().address
+  let port = server.address().port
+  console.log("AlphaReader Api listening at http://%s:%s", host, port)
+});

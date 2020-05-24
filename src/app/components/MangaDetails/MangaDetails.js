@@ -17,14 +17,12 @@ class MangaDetails extends Component {
   }
 
   execute = async () => {
-    this.setState({ loading: true, data: { chapters: [] } });
-    await mangaAPI.execute(this.manga.url).then(
-      ({ data }) => this.setState({ loading: false, data })
-    );
+    return await mangaAPI.execute(this.manga.url).then( ({ data }) => data );
   }
 
   componentDidMount = async () => {
-    await this.execute();
+    const data = await this.execute();
+    await this.setState({ loading: false, data });
   }
 
   header = () => {

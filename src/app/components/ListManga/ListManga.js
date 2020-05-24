@@ -92,7 +92,6 @@ const styles = StyleSheet.create({
     height: objectHeight,
     resizeMode: 'contain',
   },
-
 });
 
 export default ListManga;
