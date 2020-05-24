@@ -5,6 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import MangaDetails from '../../components/MangaDetails';
 
 export default function Manga({navigation, route}) {
+  navigation.setOptions({ headerTitle:  route.params.manga.name});
   return (
     <View style={styles.container}>
       <MangaDetails manga={route.params.manga} navigation={navigation} />

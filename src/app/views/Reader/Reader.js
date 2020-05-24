@@ -4,6 +4,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Reader({navigation, route}) {
+  navigation.setOptions({ headerTitle:  route.params.chapter.title});
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
