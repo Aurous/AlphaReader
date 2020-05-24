@@ -62,9 +62,7 @@ app.get('/page/:source/:uri/:chapter/:page', async (req, res) => {
   }
 })
 
-const httpsServer = https.createServer(credentials, app);
-httpsServer.listen(443, () => {
-  let host = httpsServer.address().address
-  let port = httpsServer.address().port
-  console.log("AlphaReader Api listening at http://%s:%s", host, port)
+https.createServer(credentials, app)
+.listen(5001, () => {
+  console.log("AlphaReader Api listening at http://%s:%s", httpsServer.address().address, httpsServer.address().port)
 });
