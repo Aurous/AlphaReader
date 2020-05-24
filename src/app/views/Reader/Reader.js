@@ -1,15 +1,13 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet, View } from 'react-native';
+import LoadChapter from '../../components/LoadChapter';
 
 export default function Reader({navigation, route}) {
   navigation.setOptions({ headerTitle:  route.params.chapter.title});
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <Text>{route.params.chapter.title}</Text>
-      </ScrollView>
+      <LoadChapter chapter={route.params.chapter} />
     </View>
   );
 }

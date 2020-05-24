@@ -35,7 +35,6 @@ class ListManga extends Component {
 
   onEndReached = async ({ distanceFromEnd }) => {
     if(!this.onEndReachedCalledDuringMomentum){
-      console.log("reee");
       this.page++;
       const next = await this.search();
       const data = this.state.data.data.concat(next.data);
