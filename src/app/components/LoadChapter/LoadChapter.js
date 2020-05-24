@@ -31,9 +31,10 @@ class LoadChapter extends Component {
       <View>
         <FlatList
           data={this.state.data.pages}
-          renderItem={({ item }) => (
-              <LoadPage page={item} />
-          )}
+          renderItem={({ item }) => {
+            console.log("test", item);
+            return(<LoadPage page={item} />)
+            }}
           keyExtractor={item => item.number}
           ListHeaderComponent={this.header}
           />

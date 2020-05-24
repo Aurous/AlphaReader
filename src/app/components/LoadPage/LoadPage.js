@@ -6,8 +6,6 @@ import * as mangaAPI from '../../../service/manga/api';
 class LoadPage extends Component {
   constructor(props){
     super(props);
-    console.log("efff")
-    // console.log(this.props);
     this.page = this.props.page;
     this.state = {
       data:{
@@ -18,7 +16,6 @@ class LoadPage extends Component {
 
   componentDidMount = async () => {
     const data = await this.execute();
-    // console.log(data);
     await this.setState({ loading: false, data });
   }
 
@@ -27,7 +24,6 @@ class LoadPage extends Component {
   }
 
   render() {
-    console.log("something");
     return !this.state.loading ? (
       <Text>Test</Text>
     ) : (

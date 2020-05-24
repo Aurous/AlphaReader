@@ -5,9 +5,9 @@ import https from 'https';
 import helmet from 'helmet';
 
 const credentials = {
-	key: fs.readFileSync('/etc/letsencrypt/live/alpha.ryanhill.com/privkey.pem', 'utf8'),
-	cert: fs.readFileSync('/etc/letsencrypt/live/alpha.ryanhill.com/cert.pem', 'utf8'),
-	ca: fs.readFileSync('/etc/letsencrypt/live/alpha.ryanhill.com/chain.pem', 'utf8')
+	key: fs.readFileSync('/etc/letsencrypt/live/manga.ryanhill.com/privkey.pem', 'utf8'),
+	cert: fs.readFileSync('/etc/letsencrypt/live/manga.ryanhill.com/cert.pem', 'utf8'),
+	ca: fs.readFileSync('/etc/letsencrypt/live/manga.ryanhill.com/chain.pem', 'utf8')
 };
 
 const app = express();
