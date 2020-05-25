@@ -7,8 +7,12 @@ class LoadPage extends Component {
   constructor(props){
     super(props);
     this.page = this.props.page;
+    this.headerHeight = this.props.headerHeight;
     this.state = {
       data:{
+        image:{
+          url:undefined,
+        }
       },
       loading: false,
     }
@@ -24,23 +28,23 @@ class LoadPage extends Component {
   }
 
   render() {
-    return !this.state.loading ? (
-      <Text>Test</Text>
+    return !this.state.loading && this.state.data.image.url ? (
+      <Image
+        style={[styles.image, {height:(Math.round(Dimensions.get('window').height) - this.headerHeight)}]}
+        source={{uri: this.state.data.image.url}}
+        resizeMode='contain' />
     ) : (
-      <Text>Text</Text>
+      <Loading />
     )
   }
 }
 
-// const objectWidth = Dimensions.get('window').width;
-// const objectHeight = Dimensions.get('window').height;
-//
-// const styles = StyleSheet.create({
-//   image: {
-//     width: objectWidth,
-//     height: objectHeight,
-//     resizeMode: 'contain',
-//   },
-// });
+const objectWidth = Dimensions.get('window').width;
+
+const styles = StyleSheet.create({
+  image: {
+    width: objectWidth,
+  },
+});
 
 export default LoadPage

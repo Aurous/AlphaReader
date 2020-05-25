@@ -3,6 +3,7 @@ import { View, Text, Button, FlatList, Image, StyleSheet, Dimensions, TouchableO
 import Loading from '../../components/Loading';
 import LoadPage from '../../components/LoadPage';
 import * as mangaAPI from '../../../service/manga/api';
+import { HeaderHeightContext } from '@react-navigation/stack';
 
 class LoadChapter extends Component {
   constructor(props){
@@ -26,34 +27,34 @@ class LoadChapter extends Component {
     return await mangaAPI.execute(this.chapter.url).then( ({ data }) => data );
   }
 
+  navbarHeight = () => {
+    return useHeaderHeight();
+  }
+
   render() {
     return !this.state.loading ? (
-      <View>
-        <FlatList
-          data={this.state.data.pages}
-          renderItem={({ item }) => {
-            console.log("test", item);
-            return(<LoadPage page={item} />)
-            }}
-          keyExtractor={item => item.number}
-          ListHeaderComponent={this.header}
-          />
-      </View>
+      <HeaderHeightContext.Consumer>
+        {headerHeight => (
+          <FlatList
+            data={this.state.data.pages}
+            renderItem={({ item }) => (<LoadPage page={item} headerHeight={headerHeight} /> )}
+            keyExtractor={item => item.number}
+            ListHeaderComponent={this.header}
+            horizontal={true}
+            snapToAlignment={"start"}
+            snapToInterval={objectWidth}
+            decelerationRate={"fast"}
+            pagingEnabled
+            />
+        )}
+      </HeaderHeightContext.Consumer>
+
     ) : (
       <Loading />
     )
   }
 }
 
-// const objectWidth = Dimensions.get('window').width;
-// const objectHeight = Dimensions.get('window').height;
-//
-// const styles = StyleSheet.create({
-//   image: {
-//     width: objectWidth,
-//     height: objectHeight,
-//     resizeMode: 'contain',
-//   },
-// });
+const objectWidth = Dimensions.get('window').width;
 
 export default LoadChapter

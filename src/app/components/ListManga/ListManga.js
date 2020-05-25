@@ -25,10 +25,6 @@ class ListManga extends Component {
     this.setState({ loading: false, data });
   }
 
-  componentWillUnmount = () => {
-    this.setState({ loading: false, data: { data: [] } });
-  };
-
   search = async () => {
     return await mangaAPI.search("mangareader", `page=${this.page}`).then( ({data}) => data );
   }
