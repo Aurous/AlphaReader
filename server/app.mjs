@@ -24,7 +24,7 @@ app.use(cors({
 }));
 
 app.get('/search/:source', async(req, res) => {
-	console.log(req.ip, " - Search - ", req.params, " - ", req.query);
+	console.log(req.ip, " - search - ", req.params, " - ", req.query);
   try{
     const { source } = req.params;
     const manga = new Requests(source);
@@ -37,6 +37,7 @@ app.get('/search/:source', async(req, res) => {
 })
 
 app.get('/chapters/:source/:uri', async (req, res) => {
+	console.log(req.ip, " - chapters - ", req.params, " - ", req.query);
   try{
     const { source, uri } = req.params;
     const manga = new Requests(source);
@@ -49,6 +50,7 @@ app.get('/chapters/:source/:uri', async (req, res) => {
 })
 
 app.get('/pages/:source/:uri/:chapter', async (req, res) => {
+	console.log(req.ip, " - pages - ", req.params, " - ", req.query);
   try{
     const { source, uri, chapter } = req.params;
     const manga = new Requests(source);
@@ -62,6 +64,7 @@ app.get('/pages/:source/:uri/:chapter', async (req, res) => {
 
 
 app.get('/page/:source/:uri/:chapter/:page', async (req, res) => {
+	console.log(req.ip, " - page - ", req.params, " - ", req.query);
   try{
     const { source, uri, chapter, page } = req.params;
     const manga = new Requests(source);
