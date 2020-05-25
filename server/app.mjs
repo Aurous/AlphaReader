@@ -80,7 +80,7 @@ if(env === 'production'){
 		ca: fs.readFileSync('/etc/letsencrypt/live/manga.ryanhill.com/chain.pem', 'utf8')
 	};
 	const httpsServer = https.createServer(credentials, app).listen(port, () => {
-  	console.log("AlphaReader Api listening at http://%s:%s", httpsServer.address().address, httpsServer.address().port)
+  	console.log("AlphaReader Api listening at https://%s:%s", httpsServer.address().address, httpsServer.address().port)
 	});
 }else{
 	const httpServer = http.createServer(app).listen(port, () => {
