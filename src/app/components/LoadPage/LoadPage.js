@@ -6,6 +6,7 @@ import * as mangaAPI from '../../../service/manga/api';
 class LoadPage extends Component {
   constructor(props){
     super(props);
+    this._isMounted = false;
     this.page = this.props.page;
     this.headerHeight = this.props.headerHeight;
     this.state = {
@@ -19,8 +20,13 @@ class LoadPage extends Component {
   }
 
   componentDidMount = async () => {
+    this._isMounted = true;
     const data = await this.execute();
-    await this.setState({ loading: false, data });
+    if(this._isMounted) await this.setState({ loading: false, data });
+  }
+
+  componentWillUnmount = () => {
+    this._isMounted = false;
   }
 
   execute = async () => {

@@ -8,6 +8,7 @@ import { HeaderHeightContext } from '@react-navigation/stack';
 class LoadChapter extends Component {
   constructor(props){
     super(props);
+    this._isMounted = false;
     this.chapter = this.props.chapter;
     this.state = {
       data:{
@@ -19,16 +20,17 @@ class LoadChapter extends Component {
   }
 
   componentDidMount = async () => {
+    this._isMounted = true;
     const data = await this.execute();
-    await this.setState({ loading: false, data });
+    if(this._isMounted) await this.setState({ loading: false, data });
+  }
+
+  componentWillUnmount = () => {
+    this._isMounted = false;
   }
 
   execute = async () => {
     return await mangaAPI.execute(this.chapter.url).then( ({ data }) => data );
-  }
-
-  navbarHeight = () => {
-    return useHeaderHeight();
   }
 
   render() {

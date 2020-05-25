@@ -6,6 +6,7 @@ import * as mangaAPI from '../../../service/manga/api';
 class ListManga extends Component {
   constructor (props) {
     super(props)
+    this._isMounted = false;
     this.onEndReachedCalledDuringMomentum = true;
     this.navigation = this.props.navigation;
     this.page = 1;
@@ -21,8 +22,13 @@ class ListManga extends Component {
   }
 
   componentDidMount = async () => {
+    this._isMounted = true;
     const data = await this.search();
-    this.setState({ loading: false, data });
+    if(this._isMounted) await this.setState({ loading: false, data });
+  }
+
+  componentWillUnmount = () => {
+    this._isMounted = false;
   }
 
   search = async () => {
@@ -69,8 +75,6 @@ class ListManga extends Component {
   }
 }
 
-// const width = Dimensions.get('window').width;
-// const height = Dimensions.get('window').height;
 const objectWidth = Math.round(Dimensions.get('window').width / 3);
 const objectHeight = Math.round(Math.round(Dimensions.get('window').width / 80) * (125 / 4));
 

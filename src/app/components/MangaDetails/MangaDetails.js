@@ -6,6 +6,7 @@ import * as mangaAPI from '../../../service/manga/api';
 class MangaDetails extends Component {
   constructor (props) {
     super(props)
+    this._isMounted = false;
     this.manga = this.props.manga;
     this.navigation = this.props.navigation;
     this.state = {
@@ -16,13 +17,18 @@ class MangaDetails extends Component {
     }
   }
 
-  execute = async () => {
-    return await mangaAPI.execute(this.manga.url).then( ({ data }) => data );
+  componentDidMount = async () => {
+    this._isMounted = true;
+    const data = await this.execute();
+    if(this._isMounted) await this.setState({ loading: false, data });
   }
 
-  componentDidMount = async () => {
-    const data = await this.execute();
-    await this.setState({ loading: false, data });
+  componentWillUnmount = () => {
+    this._isMounted = false;
+  }
+
+  execute = async () => {
+    return await mangaAPI.execute(this.manga.url).then( ({ data }) => data );
   }
 
   header = () => {
