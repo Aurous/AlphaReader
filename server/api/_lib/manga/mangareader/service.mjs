@@ -52,13 +52,11 @@ class MangaReader extends SourceService {
             search.testing = _(this).find('.propertytitle').each((item) => {
               if(item.text() === "Reading Direction:"){
                 console.log(item.last().text());
-                return item.last().text();
               }
             });
             search.chapters = _(this).find('.chapter_count').text();
             search.genre = _(this).find('.manga_genre').text();
             data.push(search);
-            console.log(search);
           });
           const params = (!!_('#sp').children().last().attr('href')) ? new URLSearchParams(_('#sp').children().last().attr('href').split('?')[1]) : 0;
           pageCount = (params === 0 || data.length === 0) ? 0 : parseInt(params.get('p')) / itemsPerPage;
