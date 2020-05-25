@@ -5,9 +5,10 @@ import LoadChapter from '../../components/LoadChapter';
 
 export default function Reader({navigation, route}) {
   navigation.setOptions({ headerTitle:  route.params.chapter.title});
+  console.log("readDirection", route.params.readDirection);
   return (
     <View style={styles.container}>
-      <LoadChapter chapter={route.params.chapter} />
+      <LoadChapter chapter={route.params.chapter} isManga={route.params.readDirection} />
     </View>
   );
 }

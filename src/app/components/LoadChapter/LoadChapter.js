@@ -34,6 +34,7 @@ class LoadChapter extends Component {
     return await mangaAPI.execute(this.chapter.url).then( ({ data }) => data );
   }
 
+  // maybe load pages here, could save again server spam
   render() {
     return !this.state.loading ? (
       <HeaderHeightContext.Consumer>
@@ -51,7 +52,6 @@ class LoadChapter extends Component {
             />
         )}
       </HeaderHeightContext.Consumer>
-
     ) : (
       <Loading />
     )

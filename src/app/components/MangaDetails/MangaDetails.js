@@ -32,7 +32,6 @@ class MangaDetails extends Component {
   }
 
   header = () => {
-    console.log(this.manga);
     return (
       <View>
         <Image style={styles.image} source={{uri: this.manga.thumb}} />
@@ -53,7 +52,7 @@ class MangaDetails extends Component {
               key={item.title}
               style={styles.object}
               resizeMode="contain"
-              onPress={() => { this.navigation.navigate("Reader", {chapter: item}) }}>
+              onPress={() => { this.navigation.navigate("Reader", {chapter: item, readDirection:(this.state.data.readDirection === "Right to Left")}) }}>
               <Text>{item.title}</Text>
             </TouchableOpacity>
           )}
