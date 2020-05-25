@@ -49,10 +49,6 @@ class MangaReader extends SourceService {
             search.name  = _(this).find('a').text();
             search.url = '/chapters/mangareader' + _(this).find('a').attr('href');
             search.thumb = _(this).find('.imgsearchresults').css('background-image').replace('url(\'','').replace('\')','').replace('r0','l0');
-            search.testing = _('tr').filter(() => {
-              console.log(_(this).text().trim());
-              return _(this).text().trim() === 'ReadingDirection:';
-            }).next().text();
             search.chapters = _(this).find('.chapter_count').text();
             search.genre = _(this).find('.manga_genre').text();
             data.push(search);
@@ -88,6 +84,7 @@ class MangaReader extends SourceService {
           }
         });
         let results = {};
+        results.readDirection = _('td').filter(function() { return _(this).text().trim() === 'Reading Direction:'; }).next().text() || undefined;
 				results.url = url || undefined;
 				results.chapterCount = chapters.length || undefined;
 				results.chapters = chapters || undefined;
