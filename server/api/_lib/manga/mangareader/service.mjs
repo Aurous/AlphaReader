@@ -49,7 +49,7 @@ class MangaReader extends SourceService {
             search.name  = _(this).find('a').text();
             search.url = '/chapters/mangareader' + _(this).find('a').attr('href');
             search.thumb = _(this).find('.imgsearchresults').css('background-image').replace('url(\'','').replace('\')','').replace('r0','l0');
-            search.testing = _(this).find('.propertytitle').each((item) => {
+            _(this).find('.propertytitle').each((item) => {
               if(item.text() === "Reading Direction:"){
                 console.log(item.last().text());
               }
