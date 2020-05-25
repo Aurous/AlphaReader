@@ -49,11 +49,6 @@ class MangaReader extends SourceService {
             search.name  = _(this).find('a').text();
             search.url = '/chapters/mangareader' + _(this).find('a').attr('href');
             search.thumb = _(this).find('.imgsearchresults').css('background-image').replace('url(\'','').replace('\')','').replace('r0','l0');
-            _(this).find('.propertytitle').each((item) => {
-              if(item.text() === "Reading Direction:"){
-                console.log(item.last().text());
-              }
-            });
             search.chapters = _(this).find('.chapter_count').text();
             search.genre = _(this).find('.manga_genre').text();
             data.push(search);
