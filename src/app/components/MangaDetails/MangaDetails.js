@@ -32,6 +32,7 @@ class MangaDetails extends Component {
   }
 
   header = () => {
+    console.log(this.manga);
     return (
       <View>
         <Image style={styles.image} source={{uri: this.manga.thumb}} />

@@ -10,6 +10,7 @@ class LoadChapter extends Component {
     super(props);
     this._isMounted = false;
     this.chapter = this.props.chapter;
+    this.isManga = this.props.isManga;
     this.state = {
       data:{
         pageCount:0,
@@ -42,9 +43,9 @@ class LoadChapter extends Component {
             renderItem={({ item }) => (<LoadPage page={item} headerHeight={headerHeight} /> )}
             keyExtractor={item => item.number}
             ListHeaderComponent={this.header}
-            horizontal={true}
+            horizontal={this.isManga}
             snapToAlignment={"start"}
-            snapToInterval={objectWidth}
+            snapToInterval={(this.isManga) ? objectWidth : (Dimensions.get('window').height - headerHeight)}
             decelerationRate={"fast"}
             pagingEnabled
             />
