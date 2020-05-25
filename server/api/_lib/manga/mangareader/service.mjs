@@ -84,6 +84,7 @@ class MangaReader extends SourceService {
           }
         });
         let results = {};
+        results.readDirection = _('td').filter(function() { return _(this).text().trim() === 'Reading Direction:'; }).next().text() || undefined;
 				results.url = url || undefined;
 				results.chapterCount = chapters.length || undefined;
 				results.chapters = chapters || undefined;
