@@ -3,6 +3,7 @@ import express from 'express';
 import Requests from './api/Requests/index.mjs';
 import https from 'https';
 import helmet from 'helmet';
+import cors from 'cors';
 
 const credentials = {
 	key: fs.readFileSync('/etc/letsencrypt/live/manga.ryanhill.com/privkey.pem', 'utf8'),
@@ -12,8 +13,18 @@ const credentials = {
 
 const app = express();
 app.use(helmet());
+app.use(cors({
+	origin: (origin, callback) => {
+		if(!origin) return callback(null, true);
+		if(['localhost:19006'].indexOf(origin) === -1){
+			return callback(new Error("CORS Polocy Error"), false);
+		}
+		return callback(null, true);
+	}
+}));
 
 app.get('/search/:source', async(req, res) => {
+	console.log(req.ip, " - Search - ", req.params, " - ", req.query);
   try{
     const { source } = req.params;
     const manga = new Requests(source);
