@@ -16,7 +16,8 @@ app.use(helmet());
 app.use(cors({
 	origin: (origin, callback) => {
 		if(!origin) return callback(null, true);
-		if(['localhost:19006'].indexOf(origin) === -1){
+    console.log("origin", ['https://localhost:19006'].indexOf(origin) === -1);
+		if(['https://localhost:19006'].indexOf(origin) === -1){
 			return callback(new Error("CORS Polocy Error"), false);
 		}
 		return callback(null, true);
