@@ -45,29 +45,27 @@ class ListManga extends Component {
 
   render() {
     return !this.state.loading ? (
-      <View >
-        <View style={styles.list} >
-          <FlatList
-            data={this.state.data.data}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                key={item.name}
-                style={styles.object}
-                resizeMode="contain"
-                onPress={() => { this.navigation.navigate("Manga", {manga: item}) }}>
-                <Image
-                  style={styles.image}
-                  source={{uri: item.thumb}} />
-                <Text>{item.name}</Text>
-              </TouchableOpacity>
-            )}
-            numColumns={3}
-            keyExtractor={manga => manga.name}
-            onEndReached={this.onEndReached.bind(this)}
-            onEndReachedThreshold={1}
-            onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
-            />
-        </View>
+      <View style={styles.list} >
+        <FlatList
+          data={this.state.data.data}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              key={item.name}
+              style={styles.object}
+              resizeMode="contain"
+              onPress={() => { this.navigation.navigate("Manga", {manga: item}) }}>
+              <Image
+                style={styles.image}
+                source={{uri: item.thumb}} />
+              <Text>{item.name}</Text>
+            </TouchableOpacity>
+          )}
+          numColumns={3}
+          keyExtractor={manga => manga.name}
+          onEndReached={this.onEndReached.bind(this)}
+          onEndReachedThreshold={1}
+          onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
+          />
       </View>
     ) : (
       <Loading />

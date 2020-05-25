@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Button, Image, StyleSheet, Dimensions, TouchableOpacity, FlatList } from 'react-native';
-import Loading from '../../components/Loading';
+import Loading from '../Loading';
 import * as mangaAPI from '../../../service/manga/api';
 
 class LoadPage extends Component {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Button, FlatList, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Loading from '../../components/Loading';
-import LoadPage from '../../components/Loading';
+import LoadPage from '../../components/LoadPage';
 import * as mangaAPI from '../../../service/manga/api';
 
 class LoadChapter extends Component {
@@ -38,10 +38,9 @@ class LoadChapter extends Component {
           keyExtractor={item => item.number}
           ListHeaderComponent={this.header}
           />
-        <Text>Test</Text>
       </View>
     ) : (
-      <Text>Test</Text>
+      <Loading />
     )
   }
 }
