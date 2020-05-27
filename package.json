@@ -8,7 +8,8 @@
     "eject": "expo eject",
     "test": "jest --watchAll",
     "server": "nodemon --experimental-modules server/app.mjs",
-    "prod": "export NODE_ENV=production && export PORT=5001 && node server/app.mjs"
+    "prod": "export NODE_ENV=production && export PORT=5001 && node server/app.mjs",
+    "dev": "concurrently \"npm start\" \"npm run server\""
   },
   "jest": {
     "preset": "jest-expo"
@@ -16,13 +17,14 @@
   "dependencies": {
     "@expo/vector-icons": "~10.0.6",
     "@react-native-community/masked-view": "0.1.6",
-    "@react-navigation/bottom-tabs": "^5.3.1",
-    "@react-navigation/native": "^5.2.1",
+    "@react-navigation/bottom-tabs": "^5.5.0",
+    "@react-navigation/native": "^5.4.3",
     "@react-navigation/stack": "^5.4.0",
     "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.3",
+    "concurrently": "^5.2.0",
     "cors": "^2.8.5",
-    "expo": "~37.0.9",
+    "expo": "^37.0.12",
     "expo-asset": "~8.1.0",
     "expo-constants": "~9.0.0",
     "expo-font": "~8.1.0",
@@ -44,7 +46,7 @@
     "react-native-webview": "9.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.6",
+    "@babel/core": "^7.10.0",
     "babel-preset-expo": "~8.1.0",
     "jest-expo": "~37.0.0",
     "nodemon": "^2.0.4"
