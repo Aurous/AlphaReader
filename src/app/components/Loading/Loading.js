@@ -3,10 +3,15 @@ import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 class Loading extends Component {
+  constructor(props){
+    super(props);
+    this.height = this.props.height || undefined;
+    this.width = this.props.width || undefined;
+  }
   render() {
     return (
       <ScrollView>
-        <View style={[styles.container, styles.horizontal]}>
+        <View style={[styles.container, styles.horizontal, {height:this.height, width:this.width}]}>
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
       </ScrollView>

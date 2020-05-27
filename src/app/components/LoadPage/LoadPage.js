@@ -9,6 +9,8 @@ class LoadPage extends Component {
     this._isMounted = false;
     this.page = this.props.page;
     this.headerHeight = this.props.headerHeight;
+    this.updateUrls = this.props.updateUrls;
+    this.pageUrls = this.props.pageUrls;
     this.state = {
       data:{
         image:{
@@ -22,7 +24,7 @@ class LoadPage extends Component {
   componentDidMount = async () => {
     this._isMounted = true;
     const data = await this.execute();
-    if(this._isMounted) await this.setState({ loading: false, data });
+    if(this._isMounted && data) await this.setState({ loading: false, data });
   }
 
   componentWillUnmount = () => {
@@ -30,17 +32,23 @@ class LoadPage extends Component {
   }
 
   execute = async () => {
-    return await mangaAPI.execute(this.page.url).then( ({ data }) => data );
+    if(!this.pageUrls[this.page.number]){
+      const res = await mangaAPI.execute(this.page.url).then( ({ data }) => data );
+      this.updateUrls(parseInt(this.page.number), res.image.url);
+      return res;
+    }
   }
 
   render() {
-    return !this.state.loading && this.state.data.image.url ? (
+    // console.log(typeof(this.state.image.url));
+    const url = this.state.data.image.url || this.pageUrls[this.page.number] || undefined;
+    return !this.state.loading && url ? (
       <Image
         style={[styles.image, {height:(Math.round(Dimensions.get('window').height) - this.headerHeight)}]}
-        source={{uri: this.state.data.image.url}}
+        source={{uri: url}}
         resizeMode='contain' />
     ) : (
-      <Loading />
+      <Loading height={(Math.round(Dimensions.get('window').height) - this.headerHeight)} width={objectWidth} />
     )
   }
 }

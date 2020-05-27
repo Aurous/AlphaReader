@@ -17,7 +17,9 @@ class LoadChapter extends Component {
         pages:[],
       },
       loading: false,
+      pageUrls:[]
     }
+    this.pageUrls = this.updateUrls.bind(this);
   }
 
   componentDidMount = async () => {
@@ -34,6 +36,12 @@ class LoadChapter extends Component {
     return await mangaAPI.execute(this.chapter.url).then( ({ data }) => data );
   }
 
+  updateUrls = async (number, save) => {
+    const pageUrls = this.state.pageUrls;
+    pageUrls[number] = save;
+    await this.setState({pageUrls});
+  }
+
   // maybe load pages here, could save again server spam
   render() {
     return !this.state.loading ? (
@@ -41,7 +49,7 @@ class LoadChapter extends Component {
         {headerHeight => (
           <FlatList
             data={this.state.data.pages}
-            renderItem={({ item }) => (<LoadPage page={item} headerHeight={headerHeight} /> )}
+            renderItem={({ item }) => (<LoadPage page={item} headerHeight={headerHeight} updateUrls={this.pageUrls} pageUrls={this.state.pageUrls}  /> )}
             keyExtractor={item => item.number}
             ListHeaderComponent={this.header}
             horizontal={this.isManga}
