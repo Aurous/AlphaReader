@@ -3,6 +3,7 @@ import { View, Text, Button, FlatList, Image, StyleSheet, Dimensions, TouchableO
 import Loading from '../../components/Loading';
 import LoadPage from '../../components/LoadPage';
 import * as mangaAPI from '../../../service/manga/api';
+import * as mangaAPI from '../../../service/storage';
 import { HeaderHeightContext } from '@react-navigation/stack';
 
 class LoadChapter extends Component {
@@ -42,7 +43,6 @@ class LoadChapter extends Component {
     await this.setState({pageUrls});
   }
 
-  // maybe load pages here, could save again server spam
   render() {
     return !this.state.loading ? (
       <HeaderHeightContext.Consumer>

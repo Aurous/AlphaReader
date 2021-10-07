@@ -40,7 +40,6 @@ class LoadPage extends Component {
   }
 
   render() {
-    // console.log(typeof(this.state.image.url));
     const url = this.state.data.image.url || this.pageUrls[this.page.number] || undefined;
     return !this.state.loading && url ? (
       <Image
